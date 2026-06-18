@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Tri-Ad triangular mark</title>
+  <rect width="128" height="128" rx="28" fill="#312e81"/>
+  <path d="M64 22 107 98H21L64 22Z" fill="none" stroke="#f5f3ff" stroke-width="8" stroke-linejoin="round"/>
+  <circle cx="64" cy="51" r="8" fill="#fbbf24"/>
+  <circle cx="45" cy="84" r="8" fill="#a5b4fc"/>
+  <circle cx="83" cy="84" r="8" fill="#fda4af"/>
+</svg>
