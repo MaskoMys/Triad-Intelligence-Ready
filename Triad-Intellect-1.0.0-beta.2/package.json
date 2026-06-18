@@ -1,0 +1,68 @@
+{
+  "name": "triad-cognitive-archetype-mapper",
+  "version": "1.0.0-beta.2",
+  "private": true,
+  "description": "A privacy-conscious experimental cognitive archetype mapper for a controlled beta.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10.9.0"
+  },
+  "packageManager": "npm@10.9.2",
+  "scripts": {
+    "dev": "vite",
+    "dev:pages": "npm run build && wrangler pages dev dist",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy:preview": "npm run check && wrangler pages deploy dist --branch=preview",
+    "deploy:production": "npm run check && wrangler pages deploy dist --branch=main",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "analyze:scoring": "tsx scripts/analyze-scoring.ts",
+    "check:source": "node scripts/check-source.mjs",
+    "audit:prod": "npm audit --omit=dev --audit-level=high",
+    "check": "npm run format:check && npm run typecheck && npm run lint && npm run test:coverage && npm run analyze:scoring && npm run check:source && npm run build && npm run audit:prod",
+    "smoke:pages": "npm run build && tsx scripts/smoke-pages.ts"
+  },
+  "dependencies": {
+    "jspdf": "4.2.1",
+    "lucide-react": "1.21.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.2",
+    "@tailwindcss/vite": "4.3.1",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "22.19.15",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitest/coverage-v8": "4.1.9",
+    "eslint": "9.39.2",
+    "eslint-plugin-react-hooks": "7.0.1",
+    "eslint-plugin-react-refresh": "0.5.3",
+    "globals": "16.5.0",
+    "jsdom": "29.1.1",
+    "prettier": "3.8.4",
+    "tailwindcss": "4.3.1",
+    "tsx": "4.21.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.61.1",
+    "vite": "8.0.16",
+    "vitest": "4.1.9",
+    "wrangler": "4.101.0"
+  },
+  "overrides": {
+    "esbuild": "0.28.1",
+    "ws": "8.21.0"
+  }
+}

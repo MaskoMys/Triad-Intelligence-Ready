@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "triad-cognitive-archetype-mapper",
+  "compatibility_date": "2026-06-18",
+  "pages_build_output_dir": "./dist",
+  "secrets": {
+    "required": [
+      "RESEND_API_KEY",
+      "RECEIVER_EMAIL",
+      "FROM_EMAIL",
+      "BETA_INVITE_CODE",
+      "TURNSTILE_SECRET_KEY",
+    ],
+  },
+}
