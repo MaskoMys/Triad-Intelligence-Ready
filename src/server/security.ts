@@ -40,6 +40,22 @@ export function isSameOriginRequest(request: Request): boolean {
   return !fetchSite || fetchSite === "same-origin" || fetchSite === "none";
 }
 
+function allowsTurnstileHostname(
+  actualHostname: string | undefined,
+  expectedHostname: string | undefined,
+): boolean {
+  if (!expectedHostname) return true;
+  if (!actualHostname) return false;
+
+  const allowedHostnames = expectedHostname
+    .split(",")
+    .map((hostname) => hostname.trim())
+    .filter(Boolean);
+  return (
+    allowedHostnames.length === 0 || allowedHostnames.includes(actualHostname)
+  );
+}
+
 export async function verifyTurnstile(options: {
   readonly token: string | undefined;
   readonly secret: string | undefined;
@@ -72,7 +88,8 @@ export async function verifyTurnstile(options: {
 
     const result = (await response.json()) as TurnstileVerificationResult;
     if (!result.success || result.action !== expectedAction) return false;
-    if (expectedHostname && result.hostname !== expectedHostname) return false;
+    if (!allowsTurnstileHostname(result.hostname, expectedHostname))
+      return false;
     return true;
   } catch {
     return false;

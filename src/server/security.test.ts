@@ -108,6 +108,33 @@ describe("server security helpers", () => {
     await expect(verifyTurnstile(options)).resolves.toBe(false);
   });
 
+  it("accepts a comma-separated Turnstile hostname allowlist", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            success: true,
+            action: "beta-feedback",
+            hostname: "www.intmapper.com",
+          }),
+          { status: 200 },
+        ),
+      ),
+    );
+
+    await expect(
+      verifyTurnstile({
+        token: "token",
+        secret: "secret",
+        request: new Request("https://www.intmapper.com"),
+        expectedAction: "beta-feedback",
+        expectedHostname:
+          "intmapper.com, www.intmapper.com, triad-cognitive-archetype-mapper.pages.dev",
+      }),
+    ).resolves.toBe(true);
+  });
+
   it("rejects missing tokens, provider failures, and network errors", async () => {
     await expect(
       verifyTurnstile({

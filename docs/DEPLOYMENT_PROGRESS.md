@@ -9,7 +9,7 @@ Tri-Ad has been deployed to Cloudflare Pages and now has an automated GitHub Act
 Live production URL:
 
 ```text
-https://triad-cognitive-archetype-mapper.pages.dev
+https://intmapper.com
 ```
 
 Current operational status:
@@ -18,12 +18,14 @@ Current operational status:
 Static app: deployed and reachable
 Pages Functions: deployed and reachable
 GitHub Actions deploy: passing
-Turnstile widget: created and configured for the Pages hostname
+Custom domain: intmapper.com active on Cloudflare Pages
+Turnstile widget: created and configured for production hostnames
 Resend receiver inbox: configured as benna.anis2@gmail.com
-Submission emails: blocked until FROM_EMAIL uses a verified Resend sender domain
+Resend sender domain: intmapper.com verified
+Submission emails: enabled with FROM_EMAIL=Tri-Ad Beta <beta@intmapper.com>
 ```
 
-The application is safe to inspect and smoke-test on the production URL. Do not invite beta testers to submit feedback or expanded-report requests until the `FROM_EMAIL` item below is completed.
+The application is safe to inspect and smoke-test on the production URL. Before inviting beta testers, complete one real browser submission with Turnstile and confirm exactly one operator email arrives.
 
 ## Work completed
 
@@ -56,6 +58,7 @@ The application is safe to inspect and smoke-test on the production URL. Do not 
   - `df3fe19` - `Prepare Cloudflare Pages deployment`
   - `24ae9dd` - `Update workflow action versions`
 - Verified the `CI and Deploy` workflow passes and deploys Cloudflare Pages from `main`.
+- Updated the workflow to `actions/checkout@v6`, `actions/setup-node@v5`, and `cloudflare/wrangler-action@v4`.
 
 ### Cloudflare resources
 
@@ -71,15 +74,31 @@ triad-cognitive-archetype-mapper
 triad-cognitive-archetype-mapper.pages.dev
 ```
 
+- Added custom Pages domains:
+
+```text
+intmapper.com
+www.intmapper.com
+```
+
+- Added Cloudflare DNS records:
+  - proxied CNAME `intmapper.com` to `triad-cognitive-archetype-mapper.pages.dev`
+  - proxied CNAME `www.intmapper.com` to `triad-cognitive-archetype-mapper.pages.dev`
+  - Resend DKIM TXT `resend._domainkey.intmapper.com`
+  - Resend SPF MX/TXT records on `send.intmapper.com`
+  - recommended DMARC TXT `_dmarc.intmapper.com`
+
 - Created Turnstile widget:
 
 ```text
 Tri-Ad private beta
 ```
 
-- Configured Turnstile domain:
+- Configured Turnstile domains:
 
 ```text
+intmapper.com
+www.intmapper.com
 triad-cognitive-archetype-mapper.pages.dev
 ```
 
@@ -90,11 +109,18 @@ triad-cognitive-archetype-mapper.pages.dev
   - `TURNSTILE_SECRET_KEY`
   - `TURNSTILE_EXPECTED_HOSTNAME`
   - `RATE_LIMIT_MAX`
+  - `FROM_EMAIL`
 
-Pending runtime secret:
+- Verified Resend sending domain:
 
 ```text
-FROM_EMAIL
+intmapper.com
+```
+
+- Sent one direct Resend verification email from:
+
+```text
+Tri-Ad Beta <beta@intmapper.com>
 ```
 
 ## Verification performed
@@ -111,43 +137,35 @@ Both passed after the deployment-readiness changes.
 Production verification:
 
 ```text
-GET /                      200
-GET /api/health            200
-GET /api/premium-order     405
-GET /api/beta-feedback     405
-POST /api/beta-feedback    503 until FROM_EMAIL is configured
+GET https://intmapper.com/                      200
+GET https://intmapper.com/api/health            200
+GET /api/premium-order                          405
+GET /api/beta-feedback                          405
+Direct Resend send from beta@intmapper.com      accepted
 ```
 
-The `503` on submission POSTs is currently expected because the app fails closed when required production email configuration is incomplete.
+## Remaining final checks
 
-## Remaining blocker
+### Browser submission smoke test
 
-### Configure verified Resend sender
+The remaining production check requires a real browser Turnstile token.
 
-`benna.anis2@gmail.com` is valid as the operator inbox and has been configured as `RECEIVER_EMAIL`.
-
-It cannot be used as `FROM_EMAIL` unless Resend supports sending from that domain for the account, which is not expected for `gmail.com`. Resend production sending should use a domain owned and verified by the operator.
-
-Required next step:
+Run this before inviting beta testers:
 
 ```text
-1. Buy or choose a domain.
-2. Verify that domain in Resend.
-3. Create a sender such as Tri-Ad Beta <beta@your-domain.example>.
-4. Set Cloudflare Pages secret FROM_EMAIL to that sender value.
-5. Redeploy or retry submissions.
-6. Run the production submission smoke test with correct invite code and Turnstile.
+1. Open https://intmapper.com in a normal browser.
+2. Complete a real assessment.
+3. Submit beta feedback with the correct invite code.
+4. Confirm exactly one email arrives at benna.anis2@gmail.com.
+5. Submit one expanded-report request.
+6. Confirm exactly one email arrives and the reply-to address is the participant address.
+7. Submit once with a wrong invite code and confirm rejection.
+8. Submit without completing Turnstile and confirm rejection.
 ```
 
-Wrangler command once the sender is available:
+### Hostname behavior
 
-```bash
-printf '%s' 'Tri-Ad Beta <beta@your-domain.example>' \
-  | npx wrangler pages secret put FROM_EMAIL \
-      --project-name triad-cognitive-archetype-mapper
-```
-
-Use the same Cloudflare token environment that was used for deployment.
+The server accepts Turnstile tokens from `intmapper.com`, `www.intmapper.com`, and `triad-cognitive-archetype-mapper.pages.dev`. The custom domain should be treated as the primary public URL.
 
 ## Useful operational files
 
@@ -184,8 +202,8 @@ Before inviting beta testers:
 [x] GitHub Actions deploy from main passes
 [x] Turnstile widget exists for production hostname
 [x] Receiver inbox configured
-[ ] Resend sending domain verified
-[ ] FROM_EMAIL set in Cloudflare Pages
+[x] Resend sending domain verified
+[x] FROM_EMAIL set in Cloudflare Pages
 [ ] Successful real feedback submission sends exactly one email
 [ ] Successful expanded-report request sends exactly one email
 [ ] Wrong invite code is rejected in production

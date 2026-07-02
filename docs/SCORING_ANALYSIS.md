@@ -1,6 +1,6 @@
 # Tri-Ad scoring diagnostics
 
-Generated: 2026-07-02T06:23:42.976Z  
+Generated: 2026-07-02T10:15:56.930Z  
 Seeded random samples: 100,000  
 Questions: 30  
 Profile codes: 18
