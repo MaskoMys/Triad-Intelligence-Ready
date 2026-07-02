@@ -23,6 +23,7 @@ Turnstile widget: created and configured for production hostnames
 Resend receiver inbox: configured as benna.anis2@gmail.com
 Resend sender domain: intmapper.com verified
 Submission emails: enabled with FROM_EMAIL=Tri-Ad Beta <beta@intmapper.com>
+Resend authentication: DKIM, SPF, and DMARC passing in Gmail
 ```
 
 The application is safe to inspect and smoke-test on the production URL. Before inviting beta testers, complete one real browser submission with Turnstile and confirm exactly one operator email arrives.
@@ -57,6 +58,7 @@ The application is safe to inspect and smoke-test on the production URL. Before 
 - Pushed deployment commits to `main`:
   - `df3fe19` - `Prepare Cloudflare Pages deployment`
   - `24ae9dd` - `Update workflow action versions`
+  - `2096ca7` - `Configure custom domain email readiness`
 - Verified the `CI and Deploy` workflow passes and deploys Cloudflare Pages from `main`.
 - Updated the workflow to `actions/checkout@v6`, `actions/setup-node@v5`, and `cloudflare/wrangler-action@v4`.
 
@@ -123,6 +125,9 @@ intmapper.com
 Tri-Ad Beta <beta@intmapper.com>
 ```
 
+- Confirmed Gmail received the direct Resend message with DKIM, SPF, and DMARC passing for `intmapper.com`.
+- Confirmed rollback and secret-rotation guidance is documented in `docs/CLOUDFLARE_DEPLOYMENT.md` and `docs/SECURITY.md`.
+
 ## Verification performed
 
 Local verification:
@@ -139,16 +144,20 @@ Production verification:
 ```text
 GET https://intmapper.com/                      200
 GET https://intmapper.com/api/health            200
-GET /api/premium-order                          405
-GET /api/beta-feedback                          405
-Direct Resend send from beta@intmapper.com      accepted
+GET https://www.intmapper.com/api/health        200
+POST /api/beta-feedback with empty body         400
+POST /api/beta-feedback with wrong invite       403
+POST /api/premium-order with wrong invite       403
+POST /api/beta-feedback without Turnstile       403
+POST /api/premium-order without Turnstile       403
+Direct Resend send from beta@intmapper.com      delivered and authenticated
 ```
 
 ## Remaining final checks
 
 ### Browser submission smoke test
 
-The remaining production check requires a real browser Turnstile token.
+The remaining production checks require a real browser Turnstile token.
 
 Run this before inviting beta testers:
 
@@ -159,8 +168,6 @@ Run this before inviting beta testers:
 4. Confirm exactly one email arrives at benna.anis2@gmail.com.
 5. Submit one expanded-report request.
 6. Confirm exactly one email arrives and the reply-to address is the participant address.
-7. Submit once with a wrong invite code and confirm rejection.
-8. Submit without completing Turnstile and confirm rejection.
 ```
 
 ### Hostname behavior
@@ -204,11 +211,12 @@ Before inviting beta testers:
 [x] Receiver inbox configured
 [x] Resend sending domain verified
 [x] FROM_EMAIL set in Cloudflare Pages
+[x] Direct Resend email from beta@intmapper.com is delivered and authenticated
+[x] Wrong invite code is rejected in production
+[x] Missing Turnstile is rejected in production
+[x] Operator has rollback and secret-rotation procedure ready
 [ ] Successful real feedback submission sends exactly one email
 [ ] Successful expanded-report request sends exactly one email
-[ ] Wrong invite code is rejected in production
-[ ] Missing Turnstile is rejected in production
-[ ] Operator has rollback and secret-rotation procedure ready
 ```
 
 ## Notes for future engineers

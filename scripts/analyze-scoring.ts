@@ -13,6 +13,7 @@ import {
 } from "../src/domain/assessment/index";
 
 const SAMPLE_SIZE = 100_000;
+const RANDOM_SEED = 0xa1ad2026;
 
 function createSeededRandom(seed: number): () => number {
   let state = seed >>> 0;
@@ -22,7 +23,7 @@ function createSeededRandom(seed: number): () => number {
   };
 }
 
-const random = createSeededRandom(0x7a1ad2026);
+const random = createSeededRandom(RANDOM_SEED);
 const bounds = computeTraitBounds(questions);
 const expectations = computeTraitExpectations(questions);
 const distribution = Object.fromEntries(
@@ -81,7 +82,8 @@ const nearUnreachable = PROFILE_CODES.filter(
 
 const report = `# Tri-Ad scoring diagnostics
 
-Generated: ${new Date().toISOString()}  
+Generated from deterministic seeded simulation.  
+Seed: \`0x${RANDOM_SEED.toString(16)}\`  
 Seeded random samples: ${SAMPLE_SIZE.toLocaleString()}  
 Questions: ${questions.length}  
 Profile codes: ${PROFILE_CODES.length}

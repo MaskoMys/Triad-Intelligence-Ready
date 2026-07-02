@@ -1,6 +1,7 @@
 # Tri-Ad scoring diagnostics
 
-Generated: 2026-07-02T10:15:56.930Z  
+Generated from deterministic seeded simulation.  
+Seed: `0xa1ad2026`  
 Seeded random samples: 100,000  
 Questions: 30  
 Profile codes: 18
