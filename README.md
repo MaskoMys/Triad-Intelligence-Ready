@@ -194,6 +194,7 @@ Do not upload only the `dist/` folder through an ordinary static drag-and-drop w
 
 - [Architecture](docs/ARCHITECTURE.md)
 - [Cloudflare deployment](docs/CLOUDFLARE_DEPLOYMENT.md)
+- [Deployment progress report](docs/DEPLOYMENT_PROGRESS.md)
 - [Security design](docs/SECURITY.md)
 - [Scoring model](docs/SCORING_MODEL.md)
 - [Scoring diagnostics](docs/SCORING_ANALYSIS.md)
