@@ -14,10 +14,14 @@ import {
 } from "./types";
 
 function createZeroTraitRecord(): TraitWeights {
-  return Object.fromEntries(TRAIT_KEYS.map((trait) => [trait, 0])) as TraitWeights;
+  return Object.fromEntries(
+    TRAIT_KEYS.map((trait) => [trait, 0]),
+  ) as TraitWeights;
 }
 
-export function computeTraitExpectations(questionList: readonly Question[]): TraitWeights {
+export function computeTraitExpectations(
+  questionList: readonly Question[],
+): TraitWeights {
   const expectations = createZeroTraitRecord();
 
   for (const question of questionList) {
@@ -35,14 +39,18 @@ export function computeTraitExpectations(questionList: readonly Question[]): Tra
   return expectations;
 }
 
-export function computeTraitBounds(questionList: readonly Question[]): TraitBounds {
+export function computeTraitBounds(
+  questionList: readonly Question[],
+): TraitBounds {
   return Object.fromEntries(
     TRAIT_KEYS.map((trait) => {
       let minimum = 0;
       let maximum = 0;
 
       for (const question of questionList) {
-        const weights = question.options.map((option) => option.weights[trait] ?? 0);
+        const weights = question.options.map(
+          (option) => option.weights[trait] ?? 0,
+        );
         minimum += weights.length > 0 ? Math.min(...weights) : 0;
         maximum += weights.length > 0 ? Math.max(...weights) : 0;
       }
@@ -115,19 +123,25 @@ export function normalizeScores(
       }
 
       const upperSpan = max - expected;
-      const value = upperSpan <= 0 ? 50 : 50 + ((raw - expected) / upperSpan) * 50;
+      const value =
+        upperSpan <= 0 ? 50 : 50 + ((raw - expected) / upperSpan) * 50;
       return [trait, Math.round(clamp(value, 50, 100) * 10) / 10];
     }),
   ) as TraitScores;
 }
 
 export function consolidateMacroScores(scores: TraitScores): MacroScores {
-  const roundOneDecimal = (value: number): number => Math.round(value * 10) / 10;
+  const roundOneDecimal = (value: number): number =>
+    Math.round(value * 10) / 10;
 
   return {
     imagination: roundOneDecimal((scores.creativity + scores.innovation) / 2),
-    intuition: roundOneDecimal((scores.physical + scores.metaphysical + scores.discernment) / 3),
-    judgment: roundOneDecimal((scores.logical + scores.emotional + scores.predictive) / 3),
+    intuition: roundOneDecimal(
+      (scores.physical + scores.metaphysical + scores.discernment) / 3,
+    ),
+    judgment: roundOneDecimal(
+      (scores.logical + scores.emotional + scores.predictive) / 3,
+    ),
   };
 }
 
@@ -142,8 +156,16 @@ function highestTrait<T extends readonly TraitKey[]>(
 
 export function generateProfileCode(scores: TraitScores): ProfileCode {
   const imagination = scores.creativity > scores.innovation ? "C" : "I";
-  const intuitionTrait = highestTrait(scores, ["discernment", "physical", "metaphysical"]);
-  const judgmentTrait = highestTrait(scores, ["logical", "predictive", "emotional"]);
+  const intuitionTrait = highestTrait(scores, [
+    "discernment",
+    "physical",
+    "metaphysical",
+  ]);
+  const judgmentTrait = highestTrait(scores, [
+    "logical",
+    "predictive",
+    "emotional",
+  ]);
 
   const intuition = {
     discernment: "D",

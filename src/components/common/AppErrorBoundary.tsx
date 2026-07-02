@@ -8,7 +8,10 @@ interface AppErrorBoundaryState {
   readonly hasError: boolean;
 }
 
-export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorBoundaryState> {
+export class AppErrorBoundary extends Component<
+  AppErrorBoundaryProps,
+  AppErrorBoundaryState
+> {
   public override state: AppErrorBoundaryState = { hasError: false };
 
   public static getDerivedStateFromError(): AppErrorBoundaryState {
@@ -35,8 +38,8 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
             Tri-Ad could not finish rendering this screen.
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-slate-600">
-            Refresh the page. Locally saved assessment history should remain available in this
-            browser.
+            Refresh the page. Locally saved assessment history should remain
+            available in this browser.
           </p>
           <button
             type="button"

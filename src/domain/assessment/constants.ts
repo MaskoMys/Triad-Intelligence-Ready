@@ -26,15 +26,22 @@ export const TRAIT_SHORT_LABELS: Record<TraitKey, string> = {
 };
 
 export const TRAIT_DESCRIPTIONS: Record<TraitKey, string> = {
-  creativity: "Preference for generating original, symbolic, or abstract possibilities.",
-  innovation: "Preference for adapting and improving existing systems into practical solutions.",
-  physical: "Attention to sensory evidence, body language, environments, and direct observation.",
-  metaphysical: "Attention to symbolism, dreams, meaning, and non-material interpretations.",
+  creativity:
+    "Preference for generating original, symbolic, or abstract possibilities.",
+  innovation:
+    "Preference for adapting and improving existing systems into practical solutions.",
+  physical:
+    "Attention to sensory evidence, body language, environments, and direct observation.",
+  metaphysical:
+    "Attention to symbolism, dreams, meaning, and non-material interpretations.",
   discernment:
     "Tendency to test patterns against evidence, boundaries, and competing explanations.",
-  logical: "Preference for consistency, rules, structured reasoning, and repeatable processes.",
-  emotional: "Attention to human impact, relationships, values, and emotional resonance.",
-  predictive: "Attention to temporal patterns, historical trends, and possible future outcomes.",
+  logical:
+    "Preference for consistency, rules, structured reasoning, and repeatable processes.",
+  emotional:
+    "Attention to human impact, relationships, values, and emotional resonance.",
+  predictive:
+    "Attention to temporal patterns, historical trends, and possible future outcomes.",
 };
 
 export const STORAGE_KEY = "triad.assessment-history.v1";

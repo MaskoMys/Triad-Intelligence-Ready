@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { scoreAssessment, questions, type AssessmentResult } from "@/domain/assessment";
+import {
+  scoreAssessment,
+  questions,
+  type AssessmentResult,
+} from "@/domain/assessment";
 import {
   clearAssessmentHistory,
   createHistoryExport,
@@ -8,7 +12,9 @@ import {
 } from "./storage";
 
 function fixture(): AssessmentResult {
-  const responses = Object.fromEntries(questions.map((question) => [question.id, 0]));
+  const responses = Object.fromEntries(
+    questions.map((question) => [question.id, 0]),
+  );
   return {
     schemaVersion: 1,
     id: "fixture-result",
@@ -32,9 +38,9 @@ describe("local assessment storage", () => {
   it("recomputes derived values when local storage is tampered with", () => {
     const result = fixture();
     expect(saveAssessmentHistory([result])).toBe(true);
-    const raw = JSON.parse(localStorage.getItem("triad.assessment-history.v1") ?? "[]") as Array<
-      Record<string, unknown>
-    >;
+    const raw = JSON.parse(
+      localStorage.getItem("triad.assessment-history.v1") ?? "[]",
+    ) as Array<Record<string, unknown>>;
     const first = raw[0];
     if (!first) throw new Error("Missing fixture");
     first.profileCode = result.profileCode === "CDL" ? "IDE" : "CDL";
@@ -47,7 +53,10 @@ describe("local assessment storage", () => {
   });
 
   it("drops malformed storage instead of trusting it", () => {
-    localStorage.setItem("triad.assessment-history.v1", JSON.stringify([{ forged: true }]));
+    localStorage.setItem(
+      "triad.assessment-history.v1",
+      JSON.stringify([{ forged: true }]),
+    );
     expect(loadAssessmentHistory()).toEqual([]);
   });
 

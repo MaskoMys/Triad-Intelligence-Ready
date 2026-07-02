@@ -34,8 +34,14 @@ describe("beta feedback payload", () => {
         normalizedScores: { ...validPayload.normalizedScores, creativity: -1 },
       },
     ],
-    ["oversized text", { ...validPayload, feedback: { mostTrue: "x".repeat(1001) } }],
-    ["unexpected field", { ...validPayload, email: "not-requested@example.com" }],
+    [
+      "oversized text",
+      { ...validPayload, feedback: { mostTrue: "x".repeat(1001) } },
+    ],
+    [
+      "unexpected field",
+      { ...validPayload, email: "not-requested@example.com" },
+    ],
   ])("rejects %s", (_label, payload) => {
     expect(validateBetaFeedbackSubmission(payload).success).toBe(false);
   });

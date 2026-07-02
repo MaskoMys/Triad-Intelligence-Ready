@@ -26,13 +26,19 @@ function hasMeaningfulFeedback(feedback: BetaFeedback): boolean {
   );
 }
 
-export function FeedbackPanel({ initialFeedback, onSave, onSend }: FeedbackPanelProps) {
+export function FeedbackPanel({
+  initialFeedback,
+  onSave,
+  onSend,
+}: FeedbackPanelProps) {
   const [accuracyRating, setAccuracyRating] = useState<number | undefined>(
     initialFeedback?.accuracyRating,
   );
   const [mostTrue, setMostTrue] = useState(initialFeedback?.mostTrue ?? "");
   const [mostWrong, setMostWrong] = useState(initialFeedback?.mostWrong ?? "");
-  const [wouldShare, setWouldShare] = useState<boolean | undefined>(initialFeedback?.wouldShare);
+  const [wouldShare, setWouldShare] = useState<boolean | undefined>(
+    initialFeedback?.wouldShare,
+  );
   const [wouldPayDeeper, setWouldPayDeeper] = useState<boolean | undefined>(
     initialFeedback?.wouldPayDeeper,
   );
@@ -78,7 +84,9 @@ export function FeedbackPanel({ initialFeedback, onSave, onSend }: FeedbackPanel
       aria-labelledby="beta-feedback-heading"
       className="rounded-3xl border border-slate-200 bg-white p-6 md:p-8"
     >
-      <p className="text-xs font-bold uppercase tracking-[0.16em] text-indigo-700">Private beta</p>
+      <p className="text-xs font-bold uppercase tracking-[0.16em] text-indigo-700">
+        Private beta
+      </p>
       <h2
         id="beta-feedback-heading"
         className="mt-2 font-display text-2xl font-bold text-slate-950"
@@ -86,8 +94,9 @@ export function FeedbackPanel({ initialFeedback, onSave, onSend }: FeedbackPanel
         Help improve the experience
       </h2>
       <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
-        Save privately on this device, or explicitly send the selected answers to the beta team. The
-        feedback submission does not request your name or email.
+        Save privately on this device, or explicitly send the selected answers
+        to the beta team. The feedback submission does not request your name or
+        email.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">

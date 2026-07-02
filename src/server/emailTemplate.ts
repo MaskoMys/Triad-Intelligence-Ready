@@ -1,4 +1,9 @@
-import type { ArchetypeDetails, BetaFeedback, MacroScores, ProfileCode } from "@/domain/assessment";
+import type {
+  ArchetypeDetails,
+  BetaFeedback,
+  MacroScores,
+  ProfileCode,
+} from "@/domain/assessment";
 import type { BetaEventSummary } from "@/lib/telemetry";
 import { cleanSingleLine } from "@/lib/text";
 import { escapeHtml, sanitizeSubjectPart } from "./safeText";

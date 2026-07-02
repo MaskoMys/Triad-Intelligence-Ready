@@ -31,7 +31,8 @@ interface TurnstileWidgetProps {
 }
 
 const SCRIPT_ID = "triad-turnstile-script";
-const SCRIPT_SOURCE = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+const SCRIPT_SOURCE =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 let scriptPromise: Promise<void> | undefined;
 
 function loadTurnstile(): Promise<void> {
@@ -39,7 +40,9 @@ function loadTurnstile(): Promise<void> {
   if (scriptPromise) return scriptPromise;
 
   scriptPromise = new Promise<void>((resolve, reject) => {
-    const existing = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
+    const existing = document.getElementById(
+      SCRIPT_ID,
+    ) as HTMLScriptElement | null;
     const script = existing ?? document.createElement("script");
 
     const handleLoad = () => resolve();
@@ -105,7 +108,9 @@ export function TurnstileWidget({
       })
       .catch(() => {
         if (!cancelled) {
-          errorCallbackRef.current("Security verification could not load. Refresh and try again.");
+          errorCallbackRef.current(
+            "Security verification could not load. Refresh and try again.",
+          );
         }
       });
 

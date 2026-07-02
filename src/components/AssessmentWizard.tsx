@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
-import { ASSESSMENT_DISCLAIMER, questions, type ResponseMap } from "@/domain/assessment";
+import {
+  ASSESSMENT_DISCLAIMER,
+  questions,
+  type ResponseMap,
+} from "@/domain/assessment";
 
 interface AssessmentWizardProps {
   readonly userName: string;
@@ -8,7 +12,11 @@ interface AssessmentWizardProps {
   readonly onAbort: () => void;
 }
 
-export function AssessmentWizard({ userName, onComplete, onAbort }: AssessmentWizardProps) {
+export function AssessmentWizard({
+  userName,
+  onComplete,
+  onAbort,
+}: AssessmentWizardProps) {
   const [index, setIndex] = useState(0);
   const [responses, setResponses] = useState<ResponseMap>({});
   const [error, setError] = useState("");
@@ -16,7 +24,10 @@ export function AssessmentWizard({ userName, onComplete, onAbort }: AssessmentWi
   const selected = responses[question.id];
   const progress = Math.round(((index + 1) / questions.length) * 100);
 
-  const answeredCount = useMemo(() => Object.keys(responses).length, [responses]);
+  const answeredCount = useMemo(
+    () => Object.keys(responses).length,
+    [responses],
+  );
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -70,7 +81,10 @@ export function AssessmentWizard({ userName, onComplete, onAbort }: AssessmentWi
           </span>
           <span>{progress}% complete</span>
         </div>
-        <div className="h-2 overflow-hidden rounded-full bg-slate-200" aria-hidden="true">
+        <div
+          className="h-2 overflow-hidden rounded-full bg-slate-200"
+          aria-hidden="true"
+        >
           <div
             className="h-full rounded-full bg-indigo-700 transition-all"
             style={{ width: `${progress}%` }}
@@ -79,8 +93,12 @@ export function AssessmentWizard({ userName, onComplete, onAbort }: AssessmentWi
       </div>
 
       <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/40 md:p-10">
-        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">Scenario</p>
-        <p className="mt-2 text-sm leading-7 text-slate-600">{question.scenario}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+          Scenario
+        </p>
+        <p className="mt-2 text-sm leading-7 text-slate-600">
+          {question.scenario}
+        </p>
         <h1 className="mt-5 font-display text-2xl font-bold leading-tight text-slate-950 md:text-3xl">
           {question.text}
         </h1>
@@ -103,12 +121,16 @@ export function AssessmentWizard({ userName, onComplete, onAbort }: AssessmentWi
               >
                 <span
                   className={`mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full font-mono text-xs font-bold ${
-                    active ? "bg-indigo-700 text-white" : "bg-slate-100 text-slate-500"
+                    active
+                      ? "bg-indigo-700 text-white"
+                      : "bg-slate-100 text-slate-500"
                   }`}
                 >
                   {String.fromCharCode(65 + optionIndex)}
                 </span>
-                <span className="text-sm font-medium leading-6 text-slate-800">{option.text}</span>
+                <span className="text-sm font-medium leading-6 text-slate-800">
+                  {option.text}
+                </span>
               </button>
             );
           })}
@@ -129,7 +151,9 @@ export function AssessmentWizard({ userName, onComplete, onAbort }: AssessmentWi
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Back
           </button>
-          <span className="hidden text-xs text-slate-400 sm:block">{answeredCount} answered</span>
+          <span className="hidden text-xs text-slate-400 sm:block">
+            {answeredCount} answered
+          </span>
           <button
             type="button"
             onClick={goNext}

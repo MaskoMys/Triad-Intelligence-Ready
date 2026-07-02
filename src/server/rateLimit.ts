@@ -15,18 +15,27 @@ export interface RateLimitResult {
 }
 
 async function hashIdentifier(value: string): Promise<string> {
-  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value),
+  );
+  return [...new Uint8Array(digest)]
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
 }
 
-export async function enforceRateLimit(options: RateLimitOptions): Promise<RateLimitResult> {
+export async function enforceRateLimit(
+  options: RateLimitOptions,
+): Promise<RateLimitResult> {
   const { namespace, request, scope, limit, windowSeconds } = options;
   if (!namespace) {
     return { allowed: true, remaining: limit, retryAfterSeconds: 0 };
   }
 
   const clientIdentifier =
-    request.headers.get("CF-Connecting-IP") ?? request.headers.get("User-Agent") ?? "unknown";
+    request.headers.get("CF-Connecting-IP") ??
+    request.headers.get("User-Agent") ??
+    "unknown";
   const identifierHash = await hashIdentifier(clientIdentifier);
   const currentWindow = Math.floor(Date.now() / (windowSeconds * 1000));
   const key = `${scope}:${identifierHash}:${currentWindow}`;
@@ -42,7 +51,9 @@ export async function enforceRateLimit(options: RateLimitOptions): Promise<RateL
     };
   }
 
-  await namespace.put(key, String(count + 1), { expirationTtl: windowSeconds + 60 });
+  await namespace.put(key, String(count + 1), {
+    expirationTtl: windowSeconds + 60,
+  });
   return {
     allowed: true,
     remaining: Math.max(0, limit - count - 1),

@@ -20,7 +20,11 @@ export function AppHeader({
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-stone-50/90 backdrop-blur-lg">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
-        <button type="button" onClick={onHome} className="flex items-center gap-2.5 text-left">
+        <button
+          type="button"
+          onClick={onHome}
+          className="flex items-center gap-2.5 text-left"
+        >
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-indigo-700 text-white shadow-sm">
             <Layers3 className="h-4 w-4" aria-hidden="true" />
           </span>
@@ -34,7 +38,10 @@ export function AppHeader({
           </span>
         </button>
 
-        <nav aria-label="Primary navigation" className="flex items-center gap-1">
+        <nav
+          aria-label="Primary navigation"
+          className="flex items-center gap-1"
+        >
           <button
             type="button"
             onClick={onHome}

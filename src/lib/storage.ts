@@ -14,7 +14,10 @@ import {
 
 const rawScoreSchema = z.object(
   Object.fromEntries(
-    TRAIT_KEYS.map((trait) => [trait, z.number().finite().min(-1000).max(1000)]),
+    TRAIT_KEYS.map((trait) => [
+      trait,
+      z.number().finite().min(-1000).max(1000),
+    ]),
   ) as Record<(typeof TRAIT_KEYS)[number], z.ZodNumber>,
 );
 
@@ -131,7 +134,9 @@ export function loadAssessmentHistory(): AssessmentResult[] {
   }
 }
 
-export function saveAssessmentHistory(results: readonly AssessmentResult[]): boolean {
+export function saveAssessmentHistory(
+  results: readonly AssessmentResult[],
+): boolean {
   const storage = getStorage();
   if (!storage) return false;
 
@@ -155,7 +160,9 @@ export function clearAssessmentHistory(): void {
   getStorage()?.removeItem(STORAGE_KEY);
 }
 
-export function createHistoryExport(results: readonly AssessmentResult[]): string {
+export function createHistoryExport(
+  results: readonly AssessmentResult[],
+): string {
   const exportData = {
     product: "Tri-Ad Cognitive Archetype Mapper",
     exportedAt: new Date().toISOString(),

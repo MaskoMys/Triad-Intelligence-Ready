@@ -31,14 +31,19 @@ export function getBetaEventSummary(): BetaEventSummary {
   if (!storage) return {};
 
   try {
-    const parsed = JSON.parse(storage.getItem(TELEMETRY_KEY) ?? "{}") as unknown;
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    const parsed = JSON.parse(
+      storage.getItem(TELEMETRY_KEY) ?? "{}",
+    ) as unknown;
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed))
+      return {};
 
     const source = parsed as Record<string, unknown>;
     return Object.fromEntries(
       BETA_EVENT_NAMES.flatMap((eventName) => {
         const count = source[eventName];
-        return typeof count === "number" && Number.isInteger(count) && count >= 0
+        return typeof count === "number" &&
+          Number.isInteger(count) &&
+          count >= 0
           ? [[eventName, count]]
           : [];
       }),

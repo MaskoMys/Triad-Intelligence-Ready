@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { ArrowLeft, CheckCircle2, Clipboard, Download, FileJson, Mail, Share2 } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Clipboard,
+  Download,
+  FileJson,
+  Mail,
+  Share2,
+} from "lucide-react";
 import {
   ASSESSMENT_DISCLAIMER,
   TRAIT_DESCRIPTIONS,
@@ -52,7 +60,9 @@ export function ResultsDashboard({
       trackBetaEvent("pdf_downloaded");
       showTemporaryMessage("PDF downloaded.");
     } catch {
-      setActionError("The PDF could not be generated. Refresh the page and try again.");
+      setActionError(
+        "The PDF could not be generated. Refresh the page and try again.",
+      );
     } finally {
       setPdfLoading(false);
     }
@@ -75,7 +85,9 @@ export function ResultsDashboard({
       trackBetaEvent("share_clicked");
     } catch (error: unknown) {
       if (error instanceof DOMException && error.name === "AbortError") return;
-      setActionError("Sharing is unavailable in this browser. Export the JSON or PDF instead.");
+      setActionError(
+        "Sharing is unavailable in this browser. Export the JSON or PDF instead.",
+      );
     }
   };
 
@@ -179,14 +191,18 @@ export function ResultsDashboard({
             </p>
             <div className="mt-4 flex items-center gap-2 text-xs text-indigo-100">
               <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-              {savedLocally ? "Saved locally on this device" : "Session only — not saved locally"}
+              {savedLocally
+                ? "Saved locally on this device"
+                : "Session only — not saved locally"}
             </div>
           </div>
           <div>
             <h1 className="font-display text-3xl font-bold leading-tight md:text-4xl">
               {result.archetype.name}
             </h1>
-            <p className="mt-3 text-base font-medium text-indigo-100">{result.archetype.tagline}</p>
+            <p className="mt-3 text-base font-medium text-indigo-100">
+              {result.archetype.tagline}
+            </p>
             <p className="mt-5 text-sm leading-7 text-indigo-50/90">
               {result.archetype.description}
             </p>
@@ -220,7 +236,9 @@ export function ResultsDashboard({
               <p className="mt-2 font-display text-4xl font-bold text-slate-950">
                 {Math.round(Number(value))}
               </p>
-              <p className="mt-2 text-xs leading-relaxed text-slate-500">{description}</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                {description}
+              </p>
             </div>
           ))}
         </div>
@@ -231,12 +249,15 @@ export function ResultsDashboard({
           aria-labelledby="trait-heading"
           className="rounded-3xl border border-slate-200 bg-white p-6 md:p-8"
         >
-          <h2 id="trait-heading" className="font-display text-2xl font-bold text-slate-950">
+          <h2
+            id="trait-heading"
+            className="font-display text-2xl font-bold text-slate-950"
+          >
             Eight trait scores
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
-            A score is a relative position within this experimental questionnaire, not a rank or
-            ability measure.
+            A score is a relative position within this experimental
+            questionnaire, not a rank or ability measure.
           </p>
           <div className="mt-6 space-y-5">
             {TRAIT_KEYS.map((trait) => (
@@ -251,10 +272,18 @@ export function ResultsDashboard({
         </section>
 
         <div className="space-y-6">
-          <ProfileList title="Potential strengths" items={result.archetype.strengths} />
-          <ProfileList title="Useful watch-outs" items={result.archetype.challenges} />
+          <ProfileList
+            title="Potential strengths"
+            items={result.archetype.strengths}
+          />
+          <ProfileList
+            title="Useful watch-outs"
+            items={result.archetype.challenges}
+          />
           <section className="rounded-3xl border border-slate-200 bg-white p-6">
-            <h2 className="font-display text-xl font-bold text-slate-950">Exploratory pathways</h2>
+            <h2 className="font-display text-xl font-bold text-slate-950">
+              Exploratory pathways
+            </h2>
             <p className="mt-2 text-xs leading-relaxed text-slate-500">
               Reflection prompts only; not career suitability recommendations.
             </p>
@@ -303,7 +332,11 @@ export function ResultsDashboard({
         {ASSESSMENT_DISCLAIMER}
       </p>
 
-      <PremiumOrderModal open={premiumOpen} result={result} onClose={() => setPremiumOpen(false)} />
+      <PremiumOrderModal
+        open={premiumOpen}
+        result={result}
+        onClose={() => setPremiumOpen(false)}
+      />
       <BetaFeedbackModal
         open={feedbackOpen}
         result={result}
@@ -326,7 +359,10 @@ function ProfileList({
       <h2 className="font-display text-xl font-bold text-slate-950">{title}</h2>
       <ul className="mt-4 space-y-3">
         {items.map((item) => (
-          <li key={item} className="flex gap-3 text-sm leading-relaxed text-slate-600">
+          <li
+            key={item}
+            className="flex gap-3 text-sm leading-relaxed text-slate-600"
+          >
             <span
               className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500"
               aria-hidden="true"

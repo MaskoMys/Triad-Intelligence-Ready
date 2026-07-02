@@ -19,7 +19,10 @@ export function apiHeaders(additional: HeadersInit = {}): Headers {
   headers.set("X-Content-Type-Options", "nosniff");
   headers.set("Referrer-Policy", "no-referrer");
   headers.set("X-Frame-Options", "DENY");
-  headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=()");
+  headers.set(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+  );
   return headers;
 }
 

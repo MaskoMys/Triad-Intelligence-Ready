@@ -65,15 +65,22 @@ const MINIMUM_FORM_TIME_MS = 1_500;
 const MAXIMUM_FORM_TIME_MS = 7_200_000;
 
 function hasSafeHeaderValue(value: string | undefined): value is string {
-  return Boolean(value && value.length <= 320 && cleanSingleLine(value) === value);
+  return Boolean(
+    value && value.length <= 320 && cleanSingleLine(value) === value,
+  );
 }
 
 function parseRateLimit(value: string | undefined): number {
   const parsed = Number.parseInt(value ?? "", 10);
-  return Number.isInteger(parsed) && parsed >= 1 && parsed <= 100 ? parsed : DEFAULT_RATE_LIMIT;
+  return Number.isInteger(parsed) && parsed >= 1 && parsed <= 100
+    ? parsed
+    : DEFAULT_RATE_LIMIT;
 }
 
-function requiredConfigurationError(env: SubmissionEnv, request: Request): string | null {
+function requiredConfigurationError(
+  env: SubmissionEnv,
+  request: Request,
+): string | null {
   if (!env.BETA_INVITE_CODE) return "BETA_INVITE_CODE";
 
   const consoleMode = isConsoleDelivery(env, request);
@@ -89,7 +96,10 @@ function requiredConfigurationError(env: SubmissionEnv, request: Request): strin
   return null;
 }
 
-export function isConsoleDelivery(env: SubmissionEnv, request: Request): boolean {
+export function isConsoleDelivery(
+  env: SubmissionEnv,
+  request: Request,
+): boolean {
   return env.EMAIL_DELIVERY_MODE === "console" && isLocalRequest(request);
 }
 
@@ -126,7 +136,14 @@ export async function prepareSubmission<T extends SubmissionProof>(options: {
   readonly expectedTurnstileAction: string;
   readonly validate: SubmissionValidator<T>;
 }): Promise<PreparedSubmission<T> | RejectedSubmission> {
-  const { request, env, requestId, routeKey, expectedTurnstileAction, validate } = options;
+  const {
+    request,
+    env,
+    requestId,
+    routeKey,
+    expectedTurnstileAction,
+    validate,
+  } = options;
 
   if (!isSameOriginRequest(request)) {
     return rejection(publicSubmissionError(403, "FORBIDDEN", requestId));
@@ -141,10 +158,14 @@ export async function prepareSubmission<T extends SubmissionProof>(options: {
   if (contentLength) {
     const declaredLength = Number.parseInt(contentLength, 10);
     if (!Number.isFinite(declaredLength) || declaredLength < 0) {
-      return rejection(publicSubmissionError(400, "INVALID_REQUEST", requestId));
+      return rejection(
+        publicSubmissionError(400, "INVALID_REQUEST", requestId),
+      );
     }
     if (declaredLength > MAX_BODY_BYTES) {
-      return rejection(publicSubmissionError(413, "INVALID_REQUEST", requestId));
+      return rejection(
+        publicSubmissionError(413, "INVALID_REQUEST", requestId),
+      );
     }
   }
 
@@ -155,7 +176,9 @@ export async function prepareSubmission<T extends SubmissionProof>(options: {
       routeKey,
       key: configurationError,
     });
-    return rejection(publicSubmissionError(503, "SERVICE_UNAVAILABLE", requestId));
+    return rejection(
+      publicSubmissionError(503, "SERVICE_UNAVAILABLE", requestId),
+    );
   }
 
   let rateLimit;
@@ -168,8 +191,13 @@ export async function prepareSubmission<T extends SubmissionProof>(options: {
       windowSeconds: RATE_LIMIT_WINDOW_SECONDS,
     });
   } catch {
-    console.error("submission: rate limiter unavailable", { requestId, routeKey });
-    return rejection(publicSubmissionError(503, "SERVICE_UNAVAILABLE", requestId));
+    console.error("submission: rate limiter unavailable", {
+      requestId,
+      routeKey,
+    });
+    return rejection(
+      publicSubmissionError(503, "SERVICE_UNAVAILABLE", requestId),
+    );
   }
 
   if (!rateLimit.allowed) {
@@ -181,7 +209,10 @@ export async function prepareSubmission<T extends SubmissionProof>(options: {
   }
 
   const bodyText = await request.text();
-  if (!bodyText || new TextEncoder().encode(bodyText).byteLength > MAX_BODY_BYTES) {
+  if (
+    !bodyText ||
+    new TextEncoder().encode(bodyText).byteLength > MAX_BODY_BYTES
+  ) {
     return rejection(publicSubmissionError(413, "INVALID_REQUEST", requestId));
   }
 
@@ -199,11 +230,17 @@ export async function prepareSubmission<T extends SubmissionProof>(options: {
   const payload = validation.data;
 
   const elapsed = Date.now() - payload.formStartedAt;
-  if (payload.website || elapsed < MINIMUM_FORM_TIME_MS || elapsed > MAXIMUM_FORM_TIME_MS) {
+  if (
+    payload.website ||
+    elapsed < MINIMUM_FORM_TIME_MS ||
+    elapsed > MAXIMUM_FORM_TIME_MS
+  ) {
     return rejection(publicSubmissionError(400, "INVALID_REQUEST", requestId));
   }
 
-  if (!(await constantTimeEqual(payload.inviteCode, env.BETA_INVITE_CODE ?? ""))) {
+  if (
+    !(await constantTimeEqual(payload.inviteCode, env.BETA_INVITE_CODE ?? ""))
+  ) {
     return rejection(publicSubmissionError(403, "FORBIDDEN", requestId));
   }
 

@@ -11,12 +11,19 @@ interface BetaFeedbackModalProps {
   readonly onClose: () => void;
 }
 
-export function BetaFeedbackModal({ open, result, feedback, onClose }: BetaFeedbackModalProps) {
+export function BetaFeedbackModal({
+  open,
+  result,
+  feedback,
+  onClose,
+}: BetaFeedbackModalProps) {
   const [inviteCode, setInviteCode] = useState("");
   const [website, setWebsite] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [resetSignal, setResetSignal] = useState(0);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">(
+    "idle",
+  );
   const [error, setError] = useState("");
   const [requestId, setRequestId] = useState("");
   const formStartedAtRef = useRef(Date.now());
@@ -90,12 +97,16 @@ export function BetaFeedbackModal({ open, result, feedback, onClose }: BetaFeedb
     >
       {status === "success" ? (
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-center">
-          <h3 className="font-display text-lg font-bold text-emerald-950">Feedback received</h3>
+          <h3 className="font-display text-lg font-bold text-emerald-950">
+            Feedback received
+          </h3>
           <p className="mt-2 text-sm leading-relaxed text-emerald-800">
             Thank you. Your feedback will be used to improve the private beta.
           </p>
           {requestId ? (
-            <p className="mt-2 font-mono text-xs text-emerald-700">Reference: {requestId}</p>
+            <p className="mt-2 font-mono text-xs text-emerald-700">
+              Reference: {requestId}
+            </p>
           ) : null}
           <button
             type="button"
@@ -106,7 +117,10 @@ export function BetaFeedbackModal({ open, result, feedback, onClose }: BetaFeedb
           </button>
         </div>
       ) : (
-        <form onSubmit={(event) => void handleSubmit(event)} className="space-y-4">
+        <form
+          onSubmit={(event) => void handleSubmit(event)}
+          className="space-y-4"
+        >
           <label className="block text-sm font-semibold text-slate-800">
             Private beta invite code
             <input
@@ -131,7 +145,9 @@ export function BetaFeedbackModal({ open, result, feedback, onClose }: BetaFeedb
 
           {siteKey ? (
             <div>
-              <p className="mb-2 text-sm font-semibold text-slate-800">Security verification</p>
+              <p className="mb-2 text-sm font-semibold text-slate-800">
+                Security verification
+              </p>
               <TurnstileWidget
                 siteKey={siteKey}
                 action="beta-feedback"
@@ -142,8 +158,8 @@ export function BetaFeedbackModal({ open, result, feedback, onClose }: BetaFeedb
             </div>
           ) : (
             <p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-relaxed text-amber-900">
-              Turnstile is not configured in this build. Production submissions will be rejected
-              until the Cloudflare build variable is added.
+              Turnstile is not configured in this build. Production submissions
+              will be rejected until the Cloudflare build variable is added.
             </p>
           )}
 

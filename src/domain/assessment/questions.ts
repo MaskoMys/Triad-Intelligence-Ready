@@ -10,11 +10,23 @@ export const questions: Question[] = [
     options: [
       {
         text: "I envision abstract, symbolic structures that integrate art with technology, prioritizing human inspiration.",
-        weights: { creativity: 2, innovation: -1, physical: 0, metaphysical: 1, logical: -1 },
+        weights: {
+          creativity: 2,
+          innovation: -1,
+          physical: 0,
+          metaphysical: 1,
+          logical: -1,
+        },
       },
       {
         text: "I immediately map out existing designs, looking for modules to reconfigure, optimize, and safely assemble.",
-        weights: { creativity: -1, innovation: 2, logical: 1, physical: 1, predictive: 0 },
+        weights: {
+          creativity: -1,
+          innovation: 2,
+          logical: 1,
+          physical: 1,
+          predictive: 0,
+        },
       },
       {
         text: "I trust my initial visceral gut feeling about how visitors will navigate and inhabit the space physically.",
@@ -34,7 +46,12 @@ export const questions: Question[] = [
     options: [
       {
         text: "I devise an entirely novel, unproven programming paradigm that bypasses typical compiler constraints.",
-        weights: { creativity: 2, innovation: 1, discernment: -1, predictive: -1 },
+        weights: {
+          creativity: 2,
+          innovation: 1,
+          discernment: -1,
+          predictive: -1,
+        },
       },
       {
         text: "I synthesize two open-source frameworks, optimizing their configuration to resolve the block efficiently.",
@@ -46,7 +63,12 @@ export const questions: Question[] = [
       },
       {
         text: "I reflect on the team's working dynamics, diagnosing if cognitive stress is driving code quality degradation.",
-        weights: { emotional: 2, metaphysical: 1, predictive: -1, innovation: -1 },
+        weights: {
+          emotional: 2,
+          metaphysical: 1,
+          predictive: -1,
+          innovation: -1,
+        },
       },
     ],
   },
@@ -58,7 +80,13 @@ export const questions: Question[] = [
     options: [
       {
         text: "I seek out avant-garde art installations, interpreting the symbolic and deeper abstract meaning of the architecture.",
-        weights: { creativity: 2, metaphysical: 1, physical: -1, innovation: -1, predictive: -1 },
+        weights: {
+          creativity: 2,
+          metaphysical: 1,
+          physical: -1,
+          innovation: -1,
+          predictive: -1,
+        },
       },
       {
         text: "I analyze the transit grids, public spaces, and urban layouts to understand how they can be streamlined.",
@@ -94,7 +122,13 @@ export const questions: Question[] = [
       },
       {
         text: "I gather the engineers, keeping morale steady, mediating panic, and protecting collective psychological safety.",
-        weights: { emotional: 2, metaphysical: 1, creativity: 1, predictive: -1, innovation: -1 },
+        weights: {
+          emotional: 2,
+          metaphysical: 1,
+          creativity: 1,
+          predictive: -1,
+          innovation: -1,
+        },
       },
     ],
   },
@@ -106,7 +140,13 @@ export const questions: Question[] = [
     options: [
       {
         text: "Metaphorical doodles, symbolic maps, and free-association words that provoke non-linear ideas.",
-        weights: { creativity: 2, metaphysical: 2, logical: -2, innovation: -2, predictive: -1 },
+        weights: {
+          creativity: 2,
+          metaphysical: 2,
+          logical: -2,
+          innovation: -2,
+          predictive: -1,
+        },
       },
       {
         text: "Structured flowcharts and system diagrams showing how modular pieces can integrate perfectly.",
@@ -145,7 +185,13 @@ export const questions: Question[] = [
       },
       {
         text: "As a mechanical threat to human connection that requires deep ethical guardrails to protect empathy.",
-        weights: { emotional: 2, discernment: 1, physical: 1, innovation: -1, predictive: -1 },
+        weights: {
+          emotional: 2,
+          discernment: 1,
+          physical: 1,
+          innovation: -1,
+          predictive: -1,
+        },
       },
       {
         text: "As a feedback loop of historical data, where neural networks reproduce and amplify long-term cyclical trends.",
@@ -161,7 +207,12 @@ export const questions: Question[] = [
     options: [
       {
         text: "I feel invigorated by the sheer aesthetic novelty and seek to expand its symbolic and abstract depth.",
-        weights: { creativity: 2, metaphysical: 1, discernment: -2, logical: -1 },
+        weights: {
+          creativity: 2,
+          metaphysical: 1,
+          discernment: -2,
+          logical: -1,
+        },
       },
       {
         text: "I immediately try to ground it, planning how it can adapt to optimize our current stable channels.",
@@ -185,7 +236,12 @@ export const questions: Question[] = [
     options: [
       {
         text: "An ambient, dreamlike sanctuary with subtle incense, lighting, and elements that connect to a wider unseen space.",
-        weights: { metaphysical: 2, creativity: 1, physical: 0, discernment: -1 },
+        weights: {
+          metaphysical: 2,
+          creativity: 1,
+          physical: 0,
+          discernment: -1,
+        },
       },
       {
         text: "An ergonomic, highly organized workstation optimized physically for posture, heat, and physical movement.",
@@ -228,7 +284,8 @@ export const questions: Question[] = [
   {
     id: 10,
     text: "How do you evaluate historical architecture or monuments?",
-    scenario: "You are standing outside a beautifully preserved, gothic cathedral.",
+    scenario:
+      "You are standing outside a beautifully preserved, gothic cathedral.",
     options: [
       {
         text: "I wonder about the deep transcendent mysteries and the spiritual devotions of the stonemasons who carved it.",
@@ -301,7 +358,8 @@ export const questions: Question[] = [
   {
     id: 13,
     text: "How do you handle a crisis when data is completely missing and you must act instantly?",
-    scenario: "An emergency requires immediate navigation choices in an unfamiliar facility.",
+    scenario:
+      "An emergency requires immediate navigation choices in an unfamiliar facility.",
     options: [
       {
         text: "I rely on my immediate somatic reflex and spatial sensory feedback to guide my physical coordinates.",
@@ -309,7 +367,12 @@ export const questions: Question[] = [
       },
       {
         text: "I call on a form of spiritual trust, letting an unseen inner compass direct my steps.",
-        weights: { metaphysical: 2, creativity: 1, logical: -2, discernment: 0 },
+        weights: {
+          metaphysical: 2,
+          creativity: 1,
+          logical: -2,
+          discernment: 0,
+        },
       },
       {
         text: "I rapidly cross-reference what little I see, filtering out red herrings to execute a calculated gamble.",
@@ -348,7 +411,8 @@ export const questions: Question[] = [
   {
     id: 15,
     text: "How do you interact with ancient ruins or sacred historic spaces?",
-    scenario: "You are visiting a thousands-of-years-old burial ground or ceremonial site.",
+    scenario:
+      "You are visiting a thousands-of-years-old burial ground or ceremonial site.",
     options: [
       {
         text: "I feel an intense, somber chill or electromagnetic shift, as if the site is humming with non-physical memory.",
@@ -371,7 +435,8 @@ export const questions: Question[] = [
   {
     id: 16,
     text: "When mentoring someone, what is your primary diagnostic focus?",
-    scenario: "A junior peer is struggling to perform, and you have set up a 1-on-1 session.",
+    scenario:
+      "A junior peer is struggling to perform, and you have set up a 1-on-1 session.",
     options: [
       {
         text: "I check their physical tension and breathing patterns, helping them regulate physical stress first.",
@@ -399,7 +464,12 @@ export const questions: Question[] = [
     options: [
       {
         text: "I cross-examine the impulse, actively seeking disconfirming evidence to stress-test my own hope.",
-        weights: { discernment: 2, logical: 2, creativity: -1, metaphysical: 0 },
+        weights: {
+          discernment: 2,
+          logical: 2,
+          creativity: -1,
+          metaphysical: 0,
+        },
       },
       {
         text: "I wait to see if the dream or energetic calling recurs in deep meditation and symbolic synchronicities.",
@@ -471,11 +541,21 @@ export const questions: Question[] = [
     options: [
       {
         text: "I am deeply receptive; current science is a temporary system, whereas metaphysical reality is infinite.",
-        weights: { metaphysical: 2, creativity: 2, logical: -1, discernment: -1 },
+        weights: {
+          metaphysical: 2,
+          creativity: 2,
+          logical: -1,
+          discernment: -1,
+        },
       },
       {
         text: "I demand systematic, repeatable double-blind trials, actively trying to debunk logical weaknesses.",
-        weights: { discernment: 2, logical: 2, metaphysical: -2, predictive: 0 },
+        weights: {
+          discernment: 2,
+          logical: 2,
+          metaphysical: -2,
+          predictive: 0,
+        },
       },
       {
         text: "I focus on the mechanical utility—can we replicate the physical effects or use these dynamics practically?",
@@ -516,7 +596,8 @@ export const questions: Question[] = [
   {
     id: 22,
     text: "What is your primary metric of 'truth' when selecting a strategic direction?",
-    scenario: "Your division must commit to a multi-million-dollar technology framework update.",
+    scenario:
+      "Your division must commit to a multi-million-dollar technology framework update.",
     options: [
       {
         text: "Axiomatic proof: flawless deductive reasoning, clear source code, and mechanical mathematical models.",
@@ -587,7 +668,8 @@ export const questions: Question[] = [
   {
     id: 25,
     text: "How do you prioritize design features when building a consumer interface?",
-    scenario: "You are the head of product for a wellness and diagnostic software platform.",
+    scenario:
+      "You are the head of product for a wellness and diagnostic software platform.",
     options: [
       {
         text: "Strict accessibility standards, clear rules, consistent navigation, and absolute data clarity.",
@@ -619,7 +701,12 @@ export const questions: Question[] = [
       },
       {
         text: "I hold space for their feelings, ensuring both feel deeply heard, valued, and unified in their mutual human bond.",
-        weights: { emotional: 2, physical: 1, metaphysical: 1, discernment: -1 },
+        weights: {
+          emotional: 2,
+          physical: 1,
+          metaphysical: 1,
+          discernment: -1,
+        },
       },
       {
         text: "I map their paths on a timeline, demonstrating that both are describing phases of the exact same product lifecycle.",
@@ -706,7 +793,8 @@ export const questions: Question[] = [
   {
     id: 30,
     text: "How do you decide which books or articles are worth your time?",
-    scenario: "You are building a reading queue for a week-long mental retreat.",
+    scenario:
+      "You are building a reading queue for a week-long mental retreat.",
     options: [
       {
         text: "Rigorous scientific treatises or philosophy books based on systematic proof and logical structures.",

@@ -9,7 +9,15 @@ const files = [
   "package-lock.json",
   "wrangler.jsonc",
 ];
-const allowedExtensions = new Set([".ts", ".tsx", ".js", ".mjs", ".json", ".html", ""]);
+const allowedExtensions = new Set([
+  ".ts",
+  ".tsx",
+  ".js",
+  ".mjs",
+  ".json",
+  ".html",
+  "",
+]);
 
 function collect(directory) {
   if (!existsSync(directory)) return;
@@ -47,7 +55,9 @@ for (const file of [...new Set(files)]) {
     }
   }
   for (const match of contents.matchAll(invalidTailwindScale)) {
-    failures.push(`${relative(process.cwd(), file)} contains invalid Tailwind class ${match[0]}`);
+    failures.push(
+      `${relative(process.cwd(), file)} contains invalid Tailwind class ${match[0]}`,
+    );
   }
 }
 
@@ -65,7 +75,8 @@ const requiredFiles = [
   "docs/SCORING_ANALYSIS.md",
 ];
 for (const required of requiredFiles) {
-  if (!existsSync(required)) failures.push(`Missing required file: ${required}`);
+  if (!existsSync(required))
+    failures.push(`Missing required file: ${required}`);
 }
 
 for (const forbiddenPath of [
@@ -75,7 +86,8 @@ for (const forbiddenPath of [
   "dist/server.cjs",
   "dist/server.cjs.map",
 ]) {
-  if (existsSync(forbiddenPath)) failures.push(`Forbidden path exists: ${forbiddenPath}`);
+  if (existsSync(forbiddenPath))
+    failures.push(`Forbidden path exists: ${forbiddenPath}`);
 }
 
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
@@ -98,12 +110,16 @@ if (packageJson.version !== packageLock.version) {
 
 const redirects = readFileSync("public/_redirects", "utf8");
 if (/\/\*\s+\/index\.html\s+200/.test(redirects)) {
-  failures.push("public/_redirects contains a Pages SPA rewrite that can cause an infinite loop.");
+  failures.push(
+    "public/_redirects contains a Pages SPA rewrite that can cause an infinite loop.",
+  );
 }
 
 const routes = JSON.parse(readFileSync("public/_routes.json", "utf8"));
 if (!Array.isArray(routes.include) || !routes.include.includes("/api/*")) {
-  failures.push('public/_routes.json must include exactly the API namespace "/api/*".');
+  failures.push(
+    'public/_routes.json must include exactly the API namespace "/api/*".',
+  );
 }
 
 if (failures.length > 0) {

@@ -1,4 +1,7 @@
-export function stripControlCharacters(value: string, preserveLineBreaks = false): string {
+export function stripControlCharacters(
+  value: string,
+  preserveLineBreaks = false,
+): string {
   let output = "";
   for (const character of value) {
     const code = character.charCodeAt(0);

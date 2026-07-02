@@ -22,8 +22,12 @@ describe("server security helpers", () => {
   });
 
   it("requires a matching production origin and allows local tooling", () => {
-    expect(isSameOriginRequest(new Request("https://triad.pages.dev/api"))).toBe(false);
-    expect(isSameOriginRequest(new Request("http://localhost:8788/api"))).toBe(true);
+    expect(
+      isSameOriginRequest(new Request("https://triad.pages.dev/api")),
+    ).toBe(false);
+    expect(isSameOriginRequest(new Request("http://localhost:8788/api"))).toBe(
+      true,
+    );
     expect(
       isSameOriginRequest(
         new Request("https://triad.pages.dev/api", {
@@ -70,14 +74,16 @@ describe("server security helpers", () => {
   });
 
   it("verifies successful Turnstile responses and checks action and hostname", async () => {
-    const fetchMock = vi
-      .fn()
-      .mockResolvedValue(
-        new Response(
-          JSON.stringify({ success: true, action: "premium-order", hostname: "triad.example" }),
-          { status: 200, headers: { "Content-Type": "application/json" } },
-        ),
-      );
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          success: true,
+          action: "premium-order",
+          hostname: "triad.example",
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    );
     vi.stubGlobal("fetch", fetchMock);
 
     const options = {
@@ -112,7 +118,9 @@ describe("server security helpers", () => {
       }),
     ).resolves.toBe(false);
 
-    const fetchMock = vi.fn().mockResolvedValue(new Response(null, { status: 500 }));
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 500 }));
     vi.stubGlobal("fetch", fetchMock);
     await expect(
       verifyTurnstile({
@@ -135,7 +143,9 @@ describe("server security helpers", () => {
   });
 
   it("escapes HTML and strips subject control characters", () => {
-    expect(escapeHtml("<script>'x'</script>")).toBe("&lt;script&gt;&#039;x&#039;&lt;/script&gt;");
+    expect(escapeHtml("<script>'x'</script>")).toBe(
+      "&lt;script&gt;&#039;x&#039;&lt;/script&gt;",
+    );
     expect(escapeHtml({ unsafe: true })).toBe("");
     expect(sanitizeSubjectPart("A\r\nB\tC")).toBe("A B C");
   });

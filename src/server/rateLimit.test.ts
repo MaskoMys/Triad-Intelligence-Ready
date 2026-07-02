@@ -49,7 +49,11 @@ describe("rate limiting", () => {
       windowSeconds: 60,
     });
 
-    expect(first).toEqual({ allowed: true, remaining: 0, retryAfterSeconds: 0 });
+    expect(first).toEqual({
+      allowed: true,
+      remaining: 0,
+      retryAfterSeconds: 0,
+    });
     expect(second.allowed).toBe(false);
     expect(second.retryAfterSeconds).toBeGreaterThan(0);
     expect([...kv.values.keys()][0]).toMatch(/^feedback:[a-f0-9]{64}:2$/);

@@ -15,7 +15,10 @@ export interface PagesContext<Env = Record<string, unknown>> {
   readonly params: Record<string, string | readonly string[]>;
   readonly data: Record<string, unknown>;
   readonly waitUntil: (promise: Promise<unknown>) => void;
-  readonly next: (input?: Request | string, init?: RequestInit) => Promise<Response>;
+  readonly next: (
+    input?: Request | string,
+    init?: RequestInit,
+  ) => Promise<Response>;
 }
 
 export type PagesFunction<Env = Record<string, unknown>> = (

@@ -29,7 +29,9 @@ export const betaFeedbackSubmissionSchema = z
   })
   .strict();
 
-export type BetaFeedbackSubmissionPayload = z.infer<typeof betaFeedbackSubmissionSchema>;
+export type BetaFeedbackSubmissionPayload = z.infer<
+  typeof betaFeedbackSubmissionSchema
+>;
 
 export function validateBetaFeedbackSubmission(
   body: unknown,

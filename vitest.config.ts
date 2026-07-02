@@ -13,8 +13,17 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "html", "lcov"],
-      include: ["functions/**/*.ts", "src/domain/**/*.ts", "src/lib/**/*.ts", "src/server/**/*.ts"],
-      exclude: ["**/*.test.ts", "src/domain/assessment/index.ts", "src/server/cloudflare.ts"],
+      include: [
+        "functions/**/*.ts",
+        "src/domain/**/*.ts",
+        "src/lib/**/*.ts",
+        "src/server/**/*.ts",
+      ],
+      exclude: [
+        "**/*.test.ts",
+        "src/domain/assessment/index.ts",
+        "src/server/cloudflare.ts",
+      ],
       thresholds: { lines: 75, functions: 75, statements: 75, branches: 65 },
     },
   },

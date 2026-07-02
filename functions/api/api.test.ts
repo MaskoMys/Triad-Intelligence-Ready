@@ -2,11 +2,20 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { questions, scoreAssessment } from "../../src/domain/assessment";
 import type { PagesContext } from "../../src/server/cloudflare";
 import type { SubmissionEnv } from "../../src/server/submission";
-import { onRequestGet as feedbackGet, onRequestPost as feedbackPost } from "./beta-feedback";
+import {
+  onRequestGet as feedbackGet,
+  onRequestPost as feedbackPost,
+} from "./beta-feedback";
 import { onRequestGet as healthGet } from "./health";
-import { onRequestGet as premiumGet, onRequestPost as premiumPost } from "./premium-order";
+import {
+  onRequestGet as premiumGet,
+  onRequestPost as premiumPost,
+} from "./premium-order";
 
-function context<Env = SubmissionEnv>(request: Request, env: Env = {} as Env): PagesContext<Env> {
+function context<Env = SubmissionEnv>(
+  request: Request,
+  env: Env = {} as Env,
+): PagesContext<Env> {
   return {
     request,
     env,
@@ -18,7 +27,9 @@ function context<Env = SubmissionEnv>(request: Request, env: Env = {} as Env): P
 }
 
 function scoreFixture() {
-  const responses = Object.fromEntries(questions.map((question) => [question.id, 0]));
+  const responses = Object.fromEntries(
+    questions.map((question) => [question.id, 0]),
+  );
   return scoreAssessment(responses);
 }
 
@@ -53,7 +64,10 @@ afterEach(() => vi.restoreAllMocks());
 describe("Cloudflare Pages API handlers", () => {
   it("returns a no-store health response", async () => {
     const response = await healthGet(
-      context<Record<string, unknown>>(new Request("https://triad.example/api/health"), {}),
+      context<Record<string, unknown>>(
+        new Request("https://triad.example/api/health"),
+        {},
+      ),
     );
     expect(response.status).toBe(200);
     expect(response.headers.get("Cache-Control")).toContain("no-store");
@@ -67,7 +81,9 @@ describe("Cloudflare Pages API handlers", () => {
     const request = new Request("https://triad.example/api/premium-order");
     const [premium, feedback] = await Promise.all([
       premiumGet(context(request)),
-      feedbackGet(context(new Request("https://triad.example/api/beta-feedback"))),
+      feedbackGet(
+        context(new Request("https://triad.example/api/beta-feedback")),
+      ),
     ]);
 
     expect(premium.status).toBe(405);

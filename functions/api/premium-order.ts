@@ -23,11 +23,18 @@ import {
 } from "../../src/server/submission";
 
 export const onRequestGet: PagesFunction<SubmissionEnv> = () =>
-  jsonResponse({ ok: false, code: "METHOD_NOT_ALLOWED", error: "Method not allowed." }, 405, {
-    Allow: "POST",
-  });
+  jsonResponse(
+    { ok: false, code: "METHOD_NOT_ALLOWED", error: "Method not allowed." },
+    405,
+    {
+      Allow: "POST",
+    },
+  );
 
-export const onRequestPost: PagesFunction<SubmissionEnv> = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<SubmissionEnv> = async ({
+  request,
+  env,
+}) => {
   const requestId = getRequestId(request);
   const prepared = await prepareSubmission({
     request,

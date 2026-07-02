@@ -10,7 +10,9 @@ const INVITE_CODE = "local-beta-smoke-code";
 const STARTUP_TIMEOUT_MS = 30_000;
 
 function wranglerProcess(): ChildProcessWithoutNullStreams {
-  const wranglerCli = path.resolve("node_modules/wrangler/wrangler-dist/cli.js");
+  const wranglerCli = path.resolve(
+    "node_modules/wrangler/wrangler-dist/cli.js",
+  );
   const child = spawn(
     process.execPath,
     [
@@ -43,7 +45,9 @@ function wranglerProcess(): ChildProcessWithoutNullStreams {
   return child;
 }
 
-async function waitForServer(processHandle: ChildProcessWithoutNullStreams): Promise<void> {
+async function waitForServer(
+  processHandle: ChildProcessWithoutNullStreams,
+): Promise<void> {
   const deadline = Date.now() + STARTUP_TIMEOUT_MS;
   let stderr = "";
   processHandle.stderr.on("data", (chunk: Buffer) => {
@@ -64,7 +68,9 @@ async function waitForServer(processHandle: ChildProcessWithoutNullStreams): Pro
     await new Promise((resolve) => setTimeout(resolve, 250));
   }
 
-  throw new Error(`Wrangler did not start within ${STARTUP_TIMEOUT_MS / 1000}s.\n${stderr}`);
+  throw new Error(
+    `Wrangler did not start within ${STARTUP_TIMEOUT_MS / 1000}s.\n${stderr}`,
+  );
 }
 
 async function expectStatus(
@@ -85,7 +91,9 @@ async function expectStatus(
 }
 
 function basePayload() {
-  const responses = Object.fromEntries(questions.map((question) => [question.id, 0]));
+  const responses = Object.fromEntries(
+    questions.map((question) => [question.id, 0]),
+  );
   const result = scoreAssessment(responses);
   return {
     profileCode: result.profileCode,
@@ -104,45 +112,70 @@ async function runSmokeChecks(): Promise<void> {
   }
 
   await expectStatus("health function", `${BASE_URL}/api/health`, 200);
-  await expectStatus("premium GET is blocked", `${BASE_URL}/api/premium-order`, 405);
-  await expectStatus("feedback GET is blocked", `${BASE_URL}/api/beta-feedback`, 405);
+  await expectStatus(
+    "premium GET is blocked",
+    `${BASE_URL}/api/premium-order`,
+    405,
+  );
+  await expectStatus(
+    "feedback GET is blocked",
+    `${BASE_URL}/api/beta-feedback`,
+    405,
+  );
 
-  await expectStatus("incorrect invite code is rejected", `${BASE_URL}/api/premium-order`, 403, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Origin: BASE_URL },
-    body: JSON.stringify({
-      ...basePayload(),
-      inviteCode: "wrong-code",
-      name: "Smoke Tester",
-      email: "smoke@example.com",
-    }),
-  });
+  await expectStatus(
+    "incorrect invite code is rejected",
+    `${BASE_URL}/api/premium-order`,
+    403,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Origin: BASE_URL },
+      body: JSON.stringify({
+        ...basePayload(),
+        inviteCode: "wrong-code",
+        name: "Smoke Tester",
+        email: "smoke@example.com",
+      }),
+    },
+  );
 
-  await expectStatus("premium submission function", `${BASE_URL}/api/premium-order`, 200, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Origin: BASE_URL },
-    body: JSON.stringify({
-      ...basePayload(),
-      name: "Smoke Tester",
-      email: "smoke@example.com",
-    }),
-  });
+  await expectStatus(
+    "premium submission function",
+    `${BASE_URL}/api/premium-order`,
+    200,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Origin: BASE_URL },
+      body: JSON.stringify({
+        ...basePayload(),
+        name: "Smoke Tester",
+        email: "smoke@example.com",
+      }),
+    },
+  );
 
-  await expectStatus("beta feedback function", `${BASE_URL}/api/beta-feedback`, 200, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Origin: BASE_URL },
-    body: JSON.stringify({
-      ...basePayload(),
-      feedback: {
-        accuracyRating: 4,
-        pmfResponse: "very-disappointed",
-        wouldShare: true,
-      },
-    }),
-  });
+  await expectStatus(
+    "beta feedback function",
+    `${BASE_URL}/api/beta-feedback`,
+    200,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Origin: BASE_URL },
+      body: JSON.stringify({
+        ...basePayload(),
+        feedback: {
+          accuracyRating: 4,
+          pmfResponse: "very-disappointed",
+          wouldShare: true,
+        },
+      }),
+    },
+  );
 }
 
-async function stopProcess(processHandle: ChildProcessWithoutNullStreams): Promise<void> {
+async function stopProcess(
+  processHandle: ChildProcessWithoutNullStreams,
+): Promise<void> {
   if (processHandle.exitCode !== null) return;
   const pid = processHandle.pid;
   if (!pid) return;

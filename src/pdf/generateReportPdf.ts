@@ -11,7 +11,9 @@ const PAGE_HEIGHT = 297;
 const MARGIN = 18;
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
 
-export async function generateReportPdf(result: AssessmentResult): Promise<void> {
+export async function generateReportPdf(
+  result: AssessmentResult,
+): Promise<void> {
   const { jsPDF } = await import("jspdf");
   const document = new jsPDF({ unit: "mm", format: "a4", compress: true });
   let y = MARGIN;
@@ -31,7 +33,10 @@ export async function generateReportPdf(result: AssessmentResult): Promise<void>
     y += size * 0.5 + 3;
   };
 
-  const paragraph = (text: string, options: { size?: number; gap?: number } = {}) => {
+  const paragraph = (
+    text: string,
+    options: { size?: number; gap?: number } = {},
+  ) => {
     const size = options.size ?? 10;
     const lines = document.splitTextToSize(text, CONTENT_WIDTH) as string[];
     const height = lines.length * (size * 0.42 + 1.4);
@@ -80,11 +85,21 @@ export async function generateReportPdf(result: AssessmentResult): Promise<void>
     document.setFontSize(10);
     document.setTextColor(30, 41, 59);
     document.text(label, MARGIN, y);
-    document.text(`${Math.round(value)}`, PAGE_WIDTH - MARGIN, y, { align: "right" });
+    document.text(`${Math.round(value)}`, PAGE_WIDTH - MARGIN, y, {
+      align: "right",
+    });
     document.setFillColor(226, 232, 240);
     document.roundedRect(MARGIN, y + 2, CONTENT_WIDTH, 3, 1.5, 1.5, "F");
     document.setFillColor(79, 70, 229);
-    document.roundedRect(MARGIN, y + 2, CONTENT_WIDTH * (value / 100), 3, 1.5, 1.5, "F");
+    document.roundedRect(
+      MARGIN,
+      y + 2,
+      CONTENT_WIDTH * (value / 100),
+      3,
+      1.5,
+      1.5,
+      "F",
+    );
     y += 10;
   }
   y += 3;
@@ -96,9 +111,14 @@ export async function generateReportPdf(result: AssessmentResult): Promise<void>
     document.setFontSize(9.5);
     document.setTextColor(51, 65, 85);
     document.text(TRAIT_LABELS[trait], MARGIN, y);
-    document.text(`${Math.round(result.normalizedScores[trait])}`, PAGE_WIDTH - MARGIN, y, {
-      align: "right",
-    });
+    document.text(
+      `${Math.round(result.normalizedScores[trait])}`,
+      PAGE_WIDTH - MARGIN,
+      y,
+      {
+        align: "right",
+      },
+    );
     y += 6;
   }
 
@@ -115,7 +135,8 @@ export async function generateReportPdf(result: AssessmentResult): Promise<void>
     "These are prompts for reflection rather than career recommendations or suitability judgments.",
     { size: 9, gap: 3 },
   );
-  for (const path of result.archetype.careerPaths) paragraph(`• ${path}`, { size: 9.5, gap: 1 });
+  for (const path of result.archetype.careerPaths)
+    paragraph(`• ${path}`, { size: 9.5, gap: 1 });
 
   ensureSpace(24);
   document.setDrawColor(203, 213, 225);
@@ -141,5 +162,7 @@ export async function generateReportPdf(result: AssessmentResult): Promise<void>
     );
   }
 
-  document.save(`triad-${safeFilenamePart(result.userName)}-${result.profileCode}.pdf`);
+  document.save(
+    `triad-${safeFilenamePart(result.userName)}-${result.profileCode}.pdf`,
+  );
 }

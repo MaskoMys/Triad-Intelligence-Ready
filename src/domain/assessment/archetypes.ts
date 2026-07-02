@@ -1,4 +1,9 @@
-import type { ArchetypeDetails, ArchetypeExtension, ProfileCode, TraitScores } from "./types";
+import type {
+  ArchetypeDetails,
+  ArchetypeExtension,
+  ProfileCode,
+  TraitScores,
+} from "./types";
 import { PROFILE_CODES } from "./types";
 
 interface BaseArchetype {
@@ -436,7 +441,10 @@ export function getProfileExtension(scores?: TraitScores): ArchetypeExtension {
   return fluid > anchored ? FLUID_EXTENSION : ANCHORED_EXTENSION;
 }
 
-export function getArchetype(profileCode: ProfileCode, scores?: TraitScores): ArchetypeDetails {
+export function getArchetype(
+  profileCode: ProfileCode,
+  scores?: TraitScores,
+): ArchetypeDetails {
   const base = ARCHETYPES[profileCode];
   const extension = getProfileExtension(scores);
 

@@ -8,14 +8,18 @@ afterEach(() => {
 
 describe("download helpers", () => {
   it("sanitizes unsafe filename segments and provides a fallback", () => {
-    expect(safeFilenamePart("  Résumé / Profile #1  ")).toBe("Resume-Profile-1");
+    expect(safeFilenamePart("  Résumé / Profile #1  ")).toBe(
+      "Resume-Profile-1",
+    );
     expect(safeFilenamePart("---safe_name---")).toBe("safe_name");
     expect(safeFilenamePart("<>:\\|?*")).toBe("profile");
     expect(safeFilenamePart("a".repeat(100))).toHaveLength(60);
   });
 
   it("creates, clicks, and revokes a temporary download URL", () => {
-    const createObjectURL = vi.fn<(blob: Blob | MediaSource) => string>(() => "blob:triad-test");
+    const createObjectURL = vi.fn<(blob: Blob | MediaSource) => string>(
+      () => "blob:triad-test",
+    );
     const revokeObjectURL = vi.fn();
     Object.defineProperty(URL, "createObjectURL", {
       configurable: true,
@@ -26,7 +30,9 @@ describe("download helpers", () => {
       value: revokeObjectURL,
     });
 
-    const click = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
+    const click = vi
+      .spyOn(HTMLAnchorElement.prototype, "click")
+      .mockImplementation(() => {});
     const append = vi.spyOn(document.body, "append");
 
     downloadTextFile("profile.json", '{"ok":true}', "application/json");

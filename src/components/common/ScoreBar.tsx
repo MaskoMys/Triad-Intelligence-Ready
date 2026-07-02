@@ -10,7 +10,9 @@ export function ScoreBar({ label, value, description }: ScoreBarProps) {
     <div>
       <div className="mb-1.5 flex items-center justify-between gap-4">
         <span className="text-sm font-semibold text-slate-800">{label}</span>
-        <span className="font-mono text-sm font-bold text-indigo-700">{rounded}</span>
+        <span className="font-mono text-sm font-bold text-indigo-700">
+          {rounded}
+        </span>
       </div>
       <div
         className="h-2.5 overflow-hidden rounded-full bg-slate-200"
@@ -26,7 +28,9 @@ export function ScoreBar({ label, value, description }: ScoreBarProps) {
         />
       </div>
       {description ? (
-        <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{description}</p>
+        <p className="mt-1.5 text-xs leading-relaxed text-slate-500">
+          {description}
+        </p>
       ) : null}
     </div>
   );

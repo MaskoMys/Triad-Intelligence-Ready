@@ -129,7 +129,9 @@ describe("submission preparation", () => {
   });
 
   it("rejects an incorrect invite code", async () => {
-    const result = await prepare(requestFor({ ...validPayload, inviteCode: "wrong-code" }));
+    const result = await prepare(
+      requestFor({ ...validPayload, inviteCode: "wrong-code" }),
+    );
     expect(result.ok).toBe(false);
     if (!result.ok) expect(result.response.status).toBe(403);
   });

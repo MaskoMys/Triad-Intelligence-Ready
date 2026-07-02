@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { ARCHETYPES, PROFILE_CODES, getArchetype, isProfileCode } from "./index";
+import {
+  ARCHETYPES,
+  PROFILE_CODES,
+  getArchetype,
+  isProfileCode,
+} from "./index";
 
 describe("archetype catalogue", () => {
   it("contains a complete entry for every profile code", () => {

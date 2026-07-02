@@ -52,7 +52,9 @@ export function Modal({
       }
 
       if (event.key !== "Tab" || !panel) return;
-      const focusable = [...panel.querySelectorAll<HTMLElement>(focusableSelector)];
+      const focusable = [
+        ...panel.querySelectorAll<HTMLElement>(focusableSelector),
+      ];
       if (focusable.length === 0) {
         event.preventDefault();
         panel.focus();
@@ -99,11 +101,17 @@ export function Modal({
       >
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
-            <h2 id={titleId} className="font-display text-xl font-bold text-slate-950">
+            <h2
+              id={titleId}
+              className="font-display text-xl font-bold text-slate-950"
+            >
               {title}
             </h2>
             {description ? (
-              <p id={descriptionId} className="mt-1 text-sm leading-relaxed text-slate-600">
+              <p
+                id={descriptionId}
+                className="mt-1 text-sm leading-relaxed text-slate-600"
+              >
                 {description}
               </p>
             ) : null}

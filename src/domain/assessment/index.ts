@@ -1,4 +1,9 @@
-export { ARCHETYPES, getArchetype, getProfileExtension, isProfileCode } from "./archetypes";
+export {
+  ARCHETYPES,
+  getArchetype,
+  getProfileExtension,
+  isProfileCode,
+} from "./archetypes";
 export {
   ASSESSMENT_DISCLAIMER,
   MAX_HISTORY_ITEMS,

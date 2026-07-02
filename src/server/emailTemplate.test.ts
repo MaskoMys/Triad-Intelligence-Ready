@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { questions, scoreAssessment, type AssessmentResult } from "@/domain/assessment";
+import {
+  questions,
+  scoreAssessment,
+  type AssessmentResult,
+} from "@/domain/assessment";
 import {
   buildFeedbackHtml,
   buildFeedbackPlainText,
@@ -12,7 +16,9 @@ import {
 } from "./emailTemplate";
 
 function scoredFixture(): AssessmentResult {
-  const responses = Object.fromEntries(questions.map((question) => [question.id, 0]));
+  const responses = Object.fromEntries(
+    questions.map((question) => [question.id, 0]),
+  );
   const scored = scoreAssessment(responses);
   return {
     schemaVersion: 1,
@@ -91,9 +97,15 @@ describe("submission email templates", () => {
       email: "none@example.com",
     };
 
-    expect(buildOrderPlainText(data)).toContain("No optional beta feedback supplied.");
-    expect(buildOrderPlainText(data)).toContain("No local event summary supplied.");
-    expect(buildOrderHtml(data)).toContain("No optional beta feedback supplied.");
+    expect(buildOrderPlainText(data)).toContain(
+      "No optional beta feedback supplied.",
+    );
+    expect(buildOrderPlainText(data)).toContain(
+      "No local event summary supplied.",
+    );
+    expect(buildOrderHtml(data)).toContain(
+      "No optional beta feedback supplied.",
+    );
     expect(buildOrderHtml(data)).toContain("No local event summary supplied.");
   });
 });

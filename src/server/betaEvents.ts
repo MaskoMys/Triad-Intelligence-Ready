@@ -7,7 +7,9 @@ export function normalizeBetaEvents(
   return Object.fromEntries(
     Object.entries(input).filter(
       (entry): entry is [string, number] =>
-        typeof entry[1] === "number" && Number.isInteger(entry[1]) && entry[1] >= 0,
+        typeof entry[1] === "number" &&
+        Number.isInteger(entry[1]) &&
+        entry[1] >= 0,
     ),
   );
 }

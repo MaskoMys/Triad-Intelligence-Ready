@@ -23,9 +23,11 @@ describe("assessment scoring", () => {
       expect(question.options.length).toBeGreaterThanOrEqual(2);
       for (const option of question.options) {
         expect(option.text.trim()).not.toBe("");
-        expect(Object.keys(option.weights).every((key) => TRAIT_KEYS.includes(key as never))).toBe(
-          true,
-        );
+        expect(
+          Object.keys(option.weights).every((key) =>
+            TRAIT_KEYS.includes(key as never),
+          ),
+        ).toBe(true);
       }
     }
   });
@@ -57,8 +59,16 @@ describe("assessment scoring", () => {
     ) as TraitWeights;
 
     for (const normalized of [
-      normalizeScores(minimums, DEFAULT_TRAIT_BOUNDS, DEFAULT_TRAIT_EXPECTATIONS),
-      normalizeScores(maximums, DEFAULT_TRAIT_BOUNDS, DEFAULT_TRAIT_EXPECTATIONS),
+      normalizeScores(
+        minimums,
+        DEFAULT_TRAIT_BOUNDS,
+        DEFAULT_TRAIT_EXPECTATIONS,
+      ),
+      normalizeScores(
+        maximums,
+        DEFAULT_TRAIT_BOUNDS,
+        DEFAULT_TRAIT_EXPECTATIONS,
+      ),
     ]) {
       for (const trait of TRAIT_KEYS) {
         expect(normalized[trait]).toBeGreaterThanOrEqual(0);

@@ -25,5 +25,11 @@
     },
     "types": ["vite/client"]
   },
-  "include": ["src", "functions", "scripts", "vite.config.ts", "vitest.config.ts"]
+  "include": [
+    "src",
+    "functions",
+    "scripts",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ]
 }

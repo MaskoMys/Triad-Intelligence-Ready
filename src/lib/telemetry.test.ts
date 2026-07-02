@@ -48,15 +48,19 @@ describe("local beta telemetry", () => {
   });
 
   it("treats storage failures as best-effort instead of crashing", () => {
-    const getItem = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
-      throw new DOMException("blocked");
-    });
+    const getItem = vi
+      .spyOn(Storage.prototype, "getItem")
+      .mockImplementation(() => {
+        throw new DOMException("blocked");
+      });
     expect(getBetaEventSummary()).toEqual({});
     getItem.mockRestore();
 
-    const setItem = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
-      throw new DOMException("quota");
-    });
+    const setItem = vi
+      .spyOn(Storage.prototype, "setItem")
+      .mockImplementation(() => {
+        throw new DOMException("quota");
+      });
     expect(() => trackBetaEvent("landing_viewed")).not.toThrow();
     setItem.mockRestore();
   });

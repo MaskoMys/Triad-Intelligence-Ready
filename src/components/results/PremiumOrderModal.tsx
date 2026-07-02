@@ -10,14 +10,20 @@ interface PremiumOrderModalProps {
   readonly onClose: () => void;
 }
 
-export function PremiumOrderModal({ open, result, onClose }: PremiumOrderModalProps) {
+export function PremiumOrderModal({
+  open,
+  result,
+  onClose,
+}: PremiumOrderModalProps) {
   const [name, setName] = useState(result.userName);
   const [email, setEmail] = useState("");
   const [inviteCode, setInviteCode] = useState("");
   const [website, setWebsite] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [resetSignal, setResetSignal] = useState(0);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">(
+    "idle",
+  );
   const [error, setError] = useState("");
   const [requestId, setRequestId] = useState("");
   const formStartedAtRef = useRef(Date.now());
@@ -95,12 +101,16 @@ export function PremiumOrderModal({ open, result, onClose }: PremiumOrderModalPr
     >
       {status === "success" ? (
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-center">
-          <h3 className="font-display text-lg font-bold text-emerald-950">Request received</h3>
+          <h3 className="font-display text-lg font-bold text-emerald-950">
+            Request received
+          </h3>
           <p className="mt-2 text-sm leading-relaxed text-emerald-800">
             The beta operator will review the request and contact you by email.
           </p>
           {requestId ? (
-            <p className="mt-2 font-mono text-xs text-emerald-700">Reference: {requestId}</p>
+            <p className="mt-2 font-mono text-xs text-emerald-700">
+              Reference: {requestId}
+            </p>
           ) : null}
           <button
             type="button"
@@ -111,7 +121,10 @@ export function PremiumOrderModal({ open, result, onClose }: PremiumOrderModalPr
           </button>
         </div>
       ) : (
-        <form onSubmit={(event) => void handleSubmit(event)} className="space-y-4">
+        <form
+          onSubmit={(event) => void handleSubmit(event)}
+          className="space-y-4"
+        >
           <label className="block text-sm font-semibold text-slate-800">
             Name
             <input
@@ -159,7 +172,9 @@ export function PremiumOrderModal({ open, result, onClose }: PremiumOrderModalPr
 
           {siteKey ? (
             <div>
-              <p className="mb-2 text-sm font-semibold text-slate-800">Security verification</p>
+              <p className="mb-2 text-sm font-semibold text-slate-800">
+                Security verification
+              </p>
               <TurnstileWidget
                 siteKey={siteKey}
                 action="premium-order"
@@ -170,8 +185,8 @@ export function PremiumOrderModal({ open, result, onClose }: PremiumOrderModalPr
             </div>
           ) : (
             <p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-relaxed text-amber-900">
-              Turnstile is not configured in this build. Production submissions will be rejected
-              until the Cloudflare build variable is added.
+              Turnstile is not configured in this build. Production submissions
+              will be rejected until the Cloudflare build variable is added.
             </p>
           )}
 

@@ -5,7 +5,10 @@ export interface TurnstileVerificationResult {
   readonly "error-codes"?: readonly string[];
 }
 
-export async function constantTimeEqual(left: string, right: string): Promise<boolean> {
+export async function constantTimeEqual(
+  left: string,
+  right: string,
+): Promise<boolean> {
   const encoder = new TextEncoder();
   const [leftDigest, rightDigest] = await Promise.all([
     crypto.subtle.digest("SHA-256", encoder.encode(left)),
@@ -23,7 +26,9 @@ export async function constantTimeEqual(left: string, right: string): Promise<bo
 
 export function isLocalRequest(request: Request): boolean {
   const hostname = new URL(request.url).hostname;
-  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
+  return (
+    hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1"
+  );
 }
 
 export function isSameOriginRequest(request: Request): boolean {
@@ -55,11 +60,14 @@ export async function verifyTurnstile(options: {
   if (remoteIp) payload.append("remoteip", remoteIp);
 
   try {
-    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      body: payload,
-      signal: AbortSignal.timeout(8_000),
-    });
+    const response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        body: payload,
+        signal: AbortSignal.timeout(8_000),
+      },
+    );
     if (!response.ok) return false;
 
     const result = (await response.json()) as TurnstileVerificationResult;
